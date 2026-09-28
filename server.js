@@ -82,12 +82,25 @@ export async function createApp(config, { fetchImpl = fetch } = {}) {
   });
 }
 
+let serverPromise;
+function getServer() {
+  serverPromise ??= createApp(readConfig()).then((server) => {
+    server.requestTimeout = 15_000;
+    server.headersTimeout = 10_000;
+    return server;
+  });
+  return serverPromise;
+}
+
+export default async function handler(req, res) {
+  const server = await getServer();
+  server.emit('request', req, res);
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
     const config = readConfig();
-    const server = await createApp(config);
-    server.requestTimeout = 15_000;
-    server.headersTimeout = 10_000;
+    const server = await getServer();
     server.listen(config.port, '0.0.0.0', () => console.log(`Invitation page ready at ${config.origin}. Run npm run link to get the shareable link.`));
     server.on('error', (error) => { console.error(error.message); process.exitCode = 1; });
   } catch (error) { console.error(error.message); process.exitCode = 1; }
