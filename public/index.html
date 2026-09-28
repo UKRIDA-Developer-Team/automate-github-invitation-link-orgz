@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Join {{ORG}} on GitHub</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">GITHUB ORGANIZATION INVITATION</p>
+    <h1>Join {{ORG}}</h1>
+    <p>Enter your GitHub username to receive an invitation. Then accept it on GitHub to join the organization.</p>
+    <form id="invite-form">
+      <label for="username">Your GitHub username</label>
+      <input id="username" name="username" placeholder="octocat" maxlength="39" required autocomplete="username" autocapitalize="none" spellcheck="false" pattern="[a-zA-Z0-9]([a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}" aria-describedby="hint">
+      <p id="hint" class="hint">Use your username, without the @ symbol.</p>
+      <button id="submit" type="submit" disabled>Send me an invitation</button>
+    </form>
+    <p id="status" role="status" aria-live="polite"></p>
+    <a id="accept" href="https://github.com/orgs/{{ORG}}/invitation" hidden>Accept invitation on GitHub →</a>
+    <noscript>Enable JavaScript to use this invitation link.</noscript>
+    <p class="footnote">You’ll accept the invitation while signed in to GitHub. Never enter your GitHub password here.</p>
+  </main>
+</body>
+</html>
